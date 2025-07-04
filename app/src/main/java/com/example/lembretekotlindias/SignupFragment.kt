@@ -1,84 +1,91 @@
 package com.example.lembretekotlindias
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.lembretekotlindias.databinding.FragmentLembretesBinding
+import com.example.lembretekotlindias.databinding.FragmentSignupBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
+// Fragmento responsável pela tela de cadastro
 class SignupFragment : Fragment() {
 
-    private var _binding: FragmentLembretesBinding? = null
-    private val bind get() = _binding!!
+    // Binding da view (acesso aos elementos do layout XML)
+    private var _binding: FragmentSignupBinding? = null
+    private val binding get() = _binding!!
 
-    // Preferências para salvar o lembrete e token localmente
-    private val prefs by lazy {
-        requireActivity().getSharedPreferences("signup_prefs", Context.MODE_PRIVATE)
-    }
+    // Instância de autenticação do Firebase
+    private lateinit var auth: FirebaseAuth
 
-    // Editor para modificar as preferências
-    private val editor by lazy { prefs.edit() }
-
-    // Infla o layout do fragmento
+    // Cria a view do fragmento e inicializa o Firebase Auth
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentLembretesBinding.inflate(inflater, container, false).also {
-        _binding = it
-    }.root
+    ): View {
+        _binding = FragmentSignupBinding.inflate(inflater, container, false)
+        auth = Firebase.auth // Inicializa o FirebaseAuth
+        return binding.root // Retorna a raiz da view
+    }
 
-    // Após a view ser criada
+    // Quando a view for criada, configura os botões
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        configurarTela()    // Mostra o conteúdo salvo no campo
-        configurarEventos() // Define o que acontece nos botões
+        setupListeners()
     }
 
-    // Carrega o lembrete salvo (se tiver)
-    private fun configurarTela() = with(bind) {
-        textViewName.text = "Lembrete" // Título da tela
-        TextLembrete.setText(prefs.getString("saved_note", "")) // Preenche o campo com o texto salvo
-    }
+    // Configura os listeners dos botões
+    private fun setupListeners() = binding.apply {
 
-    // Define os cliques dos botões
-    private fun configurarEventos() = with(bind) {
+        // Botão de voltar: navega para a tela anterior (HomeFragment)
+        btnVoltar.setOnClickListener {
+            findNavController().navigate(R.id.action_SignupFragment_to_HomeFragment)
+        }
 
-        // Botão salvar: salva o texto se não estiver vazio
-        btnSalvar.setOnClickListener {
-            val texto = TextLembrete.text?.toString().orEmpty()
-            if (texto.isNotBlank()) {
-                editor.putString("saved_note", texto).apply()
-                mostrarToast("Texto salvo com sucesso!")
-            } else {
-                mostrarToast("Não é possível salvar um lembrete vazio.")
+        // Botão de cadastro
+        btnSignup2.setOnClickListener {
+            // Pega o email e senha digitados pelo usuário
+            val email = textViewEmailSignup.text.toString().trim()
+            val password = textViewPasswordSignup.text.toString().trim()
+
+            // Verifica se os campos estão preenchidos
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "Email e senha não podem estar vazios", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-        }
 
-        // Botão excluir: limpa o campo e remove o lembrete salvo
-        btnExcluir.setOnClickListener {
-            TextLembrete.text?.clear()
-            editor.remove("saved_note").apply()
-            mostrarToast("Lembrete excluído")
-        }
-
-        // Botão sair: remove o token e volta pra tela inicial
-        btnSair.setOnClickListener {
-            editor.remove("token").apply()
-            findNavController().navigate(R.id.action_LembretesFragment_to_HomeFragment)
+            // Chama função para criar usuário no Firebase
+            cadastrarUsuario(email, password)
         }
     }
 
-    // Função rápida para mostrar mensagens pro usuário
-    private fun mostrarToast(msg: String) {
-        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    // Realiza o cadastro no Firebase
+    private fun cadastrarUsuario(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                // Cadastro feito com sucesso
+                Log.d("Cadastro", "Usuário criado com sucesso")
+                findNavController().navigate(R.id.action_SignupFragment_to_HomeFragment)
+            }
+            .addOnFailureListener { exception ->
+                // Trata erro no cadastro e mostra mensagem
+                val mensagem = when (exception) {
+                    is FirebaseAuthException -> exception.message ?: "Erro no cadastro"
+                    else -> "Falha ao cadastrar usuário"
+                }
+                Toast.makeText(requireContext(), mensagem, Toast.LENGTH_LONG).show()
+                Log.e("Cadastro", "Erro: ${exception.message}", exception)
+            }
     }
 
+    // Libera o binding ao destruir a view (boa prática)
     override fun onDestroyView() {
-        _binding = null
         super.onDestroyView()
+        _binding = null
     }
 }
