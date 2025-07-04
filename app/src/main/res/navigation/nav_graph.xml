@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.lembretekotlindias.HomeFragment"
+        tools:layout="@layout/fragment_home">
+
+        <argument
+            android:name="username"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_HomeFragment_to_LembretesFragment"
+            app:destination="@id/LembretesFragment" />
+
+        <action
+            android:id="@+id/action_HomeFragment_to_SignupFragment"
+            app:destination="@+id/SignupFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LembretesFragment"
+        android:name="com.example.lembretekotlindias.LembretesFragment"
+        tools:layout="@layout/fragment_lembretes">
+
+        <action
+            android:id="@+id/action_LembretesFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignupFragment"
+        android:name="com.example.lembretekotlindias.SignupFragment"
+        tools:layout="@layout/fragment_signup">
+
+        <action
+            android:id="@+id/action_SignupFragment_to_HomeFragment"
+            app:destination="@+id/HomeFragment" />
+    </fragment>
+
+</navigation>

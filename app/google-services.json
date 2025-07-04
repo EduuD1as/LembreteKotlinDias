@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "256085752336",
+    "project_id": "lembretesappkotlin",
+    "storage_bucket": "lembretesappkotlin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256085752336:android:1cf93f467d034f09d2a895",
+        "android_client_info": {
+          "package_name": "com.example.lembretekotlindias"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsz3UkdBqtdkzTLQUQsfU6Cdiv3qktj8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

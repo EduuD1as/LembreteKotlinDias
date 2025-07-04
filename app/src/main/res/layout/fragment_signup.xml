@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutCadastro"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".SignupFragment">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crie sua conta!"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewLabelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome:"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/textViewSignupName"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Digite seu nome"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@id/textViewLabelName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewSignupName"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        />
+
+    <EditText
+        android:id="@+id/textViewEmailSignup"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Digite seu email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmailLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewLabelPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Senha:"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmailSignup"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        />
+
+    <EditText
+        android:id="@+id/textViewPasswordSignup"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Digite sua senha"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/textViewLabelPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        />
+
+    <Button
+        android:id="@+id/btnSignup2"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="Cadastrar"
+        app:layout_constraintTop_toBottomOf="@id/textViewPasswordSignup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="Voltar"
+        app:layout_constraintTop_toBottomOf="@id/btnSignup2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
